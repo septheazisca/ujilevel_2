@@ -53,6 +53,7 @@ class TablesiswaController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'guru_id' => $request->guru_id,
+            'point' => $request->point,
         ]);
         // Siswa::create($request->all());
 

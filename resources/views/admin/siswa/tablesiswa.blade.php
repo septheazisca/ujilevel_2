@@ -38,6 +38,7 @@
                      <!-- <th scope="col">Email</th> -->
                      <!-- <th scope="col">Password</th> -->
                      <th scope="col">Wali Kelas</th>
+                     <th scope="col">Point</th>
                      <th scope="col">Action</th>
 
                   </tr>
@@ -59,11 +60,12 @@
                      <!-- <td>{{ $dtsiswa->email}}</td> -->
                      <!-- <td>{{ $dtsiswa->password}}</td> -->
                      <td>{{ $dtsiswa->guru->nama }}</td>
+                     <td>{{ $dtsiswa->point }}</td>
                      <!-- <td>{{ $dtsiswa->guru->kelas }}</td> -->
                      <td style="width: 19vh;">
                         <a href="/detailsiswa/{{ $dtsiswa->id }}"><i class="fa-solid fa-circle-info" style="color: green; font-size: 23px; margin-right: .5vh;"></i></a>
                         <a href="/editformsiswa/{{ $dtsiswa->id }}"><i class="fa-solid fa-pen-to-square" style="font-size: 23px; margin-right: .5vh;"></i></a>
-                        <a href="/deletedatapelanggaran/{{ $dtsiswa->id }}" style="margin-left: 5px;"><i class="fa-solid fa-trash" style="color: red; font-size: 23px; margin-right: .5vh;"></i></a>
+                        <a href="/deletesiswa/{{ $dtsiswa->id }}" style="margin-left: 5px;"><i class="fa-solid fa-trash" style="color: red; font-size: 23px; margin-right: .5vh;"></i></a>
                      </td>
                   </tr>
                   @endforeach

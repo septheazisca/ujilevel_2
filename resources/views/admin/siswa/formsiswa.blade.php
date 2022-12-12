@@ -65,6 +65,7 @@
                   <div class="col-md-4"> <label for="inputZip" class="form-label">Email</label> <input type="email" name="email" class="form-control" id="inputZip"></div>
                   <div class="col-md-4"> <label for="inputZip" class="form-label">Password</label> <input type="password" name="password" class="form-control" id="inputZip"></div>
                   <div class="col-md-12"> 
+                     <input style="display: none" type="text" value="0" name="point" id="">
                      <label for="inputName5" class="form-label">Wali Kelas</label> 
                      <select id="inputState" class="form-select" name="guru_id" id="guru_id">
                         <option disabled value>Pilih Wali Kelas</option>
@@ -73,6 +74,7 @@
                         @endforeach
                      </select>
                   </div>
+                  
                   <div class="text-center"> 
                      <button type="submit" class="btn btn-primary">Submit</button> 
                   </div>

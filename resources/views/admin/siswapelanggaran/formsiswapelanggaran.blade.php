@@ -37,15 +37,7 @@
                      </select>
                   </div>
                   
-                  <div class="col-md-12"> 
-                     <label for="inputName5" class="form-label">Kelas Siswa</label> 
-                     <select id="inputState" class="form-select" name="siswa_id" id="siswa_id">
-                        <option disabled value>Pilih Kelas Siswa</option>
-                        @foreach ($inidatasiswa as $s )
-                        <option value="{{ $s->id }}">{{ $s-> kelas }}</option>
-                        @endforeach
-                     </select>
-                  </div>
+                  
                   
                   <div class="col-md-12"> 
                      <label for="inputName5" class="form-label">Nama Pelanggaran</label> 
@@ -55,6 +47,10 @@
                         <option value="{{ $p->id }}">{{ $p-> pelanggaran }}</option>
                         @endforeach
                      </select>
+                  </div>
+                  <div class="col-md-12"> 
+                     <label for="inputName5" class="form-label">Tanggal</label> 
+                     <input type="datetime-local" class="form-control" id="inputName5" name="tanggal">
                   </div>
                   
                   

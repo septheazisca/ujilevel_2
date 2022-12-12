@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Datapelanggaran;
+use App\Models\datapelanggarans_kasus;
+use App\Models\Kasus;
+use App\Models\Kasus_siswa;
 use App\Models\Pelanggaran;
 use Illuminate\Http\Request;
 use App\Models\Siswa;
 use App\Models\SiswaDatapelanggaran;
+use Illuminate\Support\Facades\DB;
 
 class SiswapelanggaraController extends Controller
 {
@@ -15,10 +19,10 @@ class SiswapelanggaraController extends Controller
         // $inipsiswa = SiswaDatapelanggaran::all();
         // $inipelanggaran = Datapelanggaran::all();
         // return view('admin.siswapelanggaran.siswapelanggaran', compact( 'inipsiswa', 'inipelanggaran'));
-        $dataSiswa = Siswa::with('relationToDatapelanggaran')->get();
-        dd($dataSiswa);
-        $data = SiswaDatapelanggaran::all();
-        return view('admin.siswapelanggaran.siswapelanggaran', ['dataSiswa' => $dataSiswa]);
+        $datakasus = Kasus::with(['relasitopelanggaran','relasitosiswa'])->get();
+      
+        $data = Kasus::all();
+        return view('admin.siswapelanggaran.siswapelanggaran', ['datakasus'=>$datakasus]);
     }
 
     // create
@@ -32,14 +36,29 @@ class SiswapelanggaraController extends Controller
     // store
     public function store(Request $request)
     {
-        // dd($request->all());
-        SiswaDatapelanggaran::create([
+        Kasus::create([
             'siswa_id' => $request->siswa_id,
-            'datapelanggaran_id' => $request->datapelanggaran_id,
+            'datapelanggaran_id'=>$request->datapelanggaran_id,
+            'tanggal'=>$request->tanggal
         ]);
-        // Siswa::create($request->all());
-
-        // return redirect('siswapelanggaran');
+        $data = DB::table('kasus')->orderBy('id', 'DESC')->limit(1)->get()->pluck('id')->first();
+        Kasus_siswa::create([
+            'siswa_id' => $request->siswa_id,
+            'kasus_id' =>$data,
+        ]);
+        datapelanggarans_kasus::create([
+            'datapelanggaran_id'=>$request->datapelanggaran_id,
+            'kasus_id' =>$data,
+        ]);
+        $siswa = Siswa::findOrFail($request->siswa_id);
+        $pelanggaran = Datapelanggaran::findOrFail($request->datapelanggaran_id);
+        $p = $pelanggaran->poin;
+       
+        $s = $siswa->point;
+        $plus = $s + $p;
+        $siswa->update([
+            'point' => $plus
+        ]);
         return redirect('index');
 
     }
@@ -48,23 +67,36 @@ class SiswapelanggaraController extends Controller
     // update
     public function edit($id)
     {
-        $data = SiswaDatapelanggaran::find($id);
-        $inipsiswa = SiswaDatapelanggaran::all();
-        $inipelanggaran = Datapelanggaran::all();
-        return view('admin.siswapelanggaran.editformsiswapelanggaran', compact( 'data', 'inipsiswa', 'inipelanggaran'));
+       
     }
 
     // delete
     public function destroy($id)
     {
         
-        $editsiswa = Siswa::findorfail($id);
+        $editsiswa = Kasus::findorfail($id);
+        $siswa = $editsiswa->siswa_id;
+        $pelanggaran = $editsiswa->datapelanggaran_id;
+        
+        $s= Siswa::findOrFail($siswa);
+        $p=Datapelanggaran::findOrFail($pelanggaran);
+        $ss = $s->point;
+        $pp = $p->poin;
+        $minus = $ss - $pp;
+
         $editsiswa->delete();
+        $s->update([
+            'point'=>$minus
+        ]);
         return back();
     }
     public function detail($id)
-    {
-        $editsiswa = SiswaDatapelanggaran::findorfail($id);
-        return view('admin.siswapelanggaran.detailsiswapelanggaran', compact('editsiswa'));
+    {   
+        $kasus = Kasus::findorfail($id);
+        $s = $kasus->siswa_id;
+        $p = $kasus->datapelanggaran_id;
+      
+       
+        return view('admin.siswapelanggaran.detailsiswapelanggaran');
     }
 }

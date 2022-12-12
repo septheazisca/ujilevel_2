@@ -55,26 +55,25 @@
                            $no = 1;
                         @endphp
                         <tbody>
-                          @foreach ($dataSiswa as $ds)
-                          @foreach ($ds->relationToDatapelanggaran as $dp)
+                          @foreach ($datakasus as $dk)
+                         @foreach ($dk->relasitosiswa as $s)
+                         @foreach ($dk->relasitopelanggaran as $p)
                             <tr>
                               <td>{{ $no++ }}</td>
-                              <td>{{ $ds->nama }}</td>
-                              <td>{{ $ds->kelas }}</td>
-                              <td>{{ $ds->guru->nama }}</td>
+                              <td>{{ $s->nama}}</td>
+                              <td>{{ $s->kelas}}</td>
+                              <td>{{ $s->guru->nama}}</td>
+                              <td>{{$p->pelanggaran}}</td>
+                              <td>{{$p->poin}}</td>
+                              
                               <td>
+                              <a href="/detailpelanggaransiswa/{{ $dk->id }}"><i class="fa-solid fa-circle-info" style="color: green; font-size: 23px; margin-right: .5vh;"></i></a>
                                  
-                                 <P>{{ $dp->pelanggaran }}</P>
-                                 
-                              </td>
-                              <td class="text-contener">{{ $ds->relationToDatapelanggaran->count() }}</td>
-                              <td>
-                              <a href="/detailpelanggaransiswa/{{ $ds->id }}"><i class="fa-solid fa-circle-info" style="color: green; font-size: 23px; margin-right: .5vh;"></i></a>
-                                 <a href="/editformpelanggaransiswa/{{ $ds->id }}"><i class="fa-solid fa-pen-to-square" style="font-size: 23px; margin-right: .5vh;"></i></a>
-                                 <a href="/deleteformpelanggaransiswa/{{ $ds->id }}" style="margin-left: 5px;"><i class="fa-solid fa-trash" style="color: red; font-size: 23px; margin-right: .5vh;"></i></a>
+                                 <a href="/deleteformpelanggaransiswa/{{ $dk->id }}" style="margin-left: 5px;"><i class="fa-solid fa-trash" style="color: red; font-size: 23px; margin-right: .5vh;"></i></a>
                               </td>
                             </tr>
-                            @endforeach 
+                            @endforeach
+                            @endforeach
                           @endforeach
                         </tbody>
                      </table>

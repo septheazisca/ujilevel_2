@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pelanggarans', function (Blueprint $table) {
-            $table->id();
-            $table->string('pelanggaran', 200);
-            $table->string('tindak_lanjut', 200);
-            $table->integer('jumlah_poin');
-            $table->timestamps();
+        Schema::table('siswas', function (Blueprint $table) {
+            $table->integer('point')->after('guru_id')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pelanggarans');
+        Schema::table('siswas', function (Blueprint $table) {
+            //
+        });
     }
 };

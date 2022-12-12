@@ -15,14 +15,14 @@ class Siswa extends Model
     protected $table = 'siswas';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'nama', 'kelas', 'jurusan', 'nis', 'jenis_kelamin', 'alamat', 'notelepon', 'email', 'password', 'guru_id',
+        'id', 'nama', 'kelas', 'jurusan', 'nis', 'jenis_kelamin', 'alamat', 'notelepon', 'email', 'password', 'guru_id','point'
     ];
     public function guru(){
         return $this->belongsTo(Guru::class);
     }
 
-    protected function  (){
-        return $this->belongsToMany('App\Models\Datapelanggaran');
+    protected function relasiTokasus (){
+        return $this->belongsToMany('App\Models\Kasus');
     }
 
 }
